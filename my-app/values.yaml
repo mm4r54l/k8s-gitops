@@ -1,0 +1,19 @@
+global:
+  dockerUsername: mm4r54l
+  tag: latest
+  imagePullPolicy: Always
+
+auth:
+  name: auth
+  replicas: 1
+  port: 3000
+
+api-gateway:
+  name: api-gateway
+  replicas: 1
+  port: 3000
+
+client:
+  name: client
+  replicas: 1
+  port: 80
