@@ -1,43 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{.Values.client.name }} 
+  name: {{ .Values.client.name }} 
   labels:
-    app: {{.Values.client.name }}  
+    app: {{ .Values.client.name }}  
 spec:
-  replicas: {{.Values.client.replicas }}
+  replicas: {{ .Values.client.replicas }}
   selector:
     matchLabels:
-      app: {{.Values.client.name }}
+      app: {{ .Values.client.name }}
   template:
     metadata:
       labels:
-        app: {{.Values.client.name }}
+        app: {{ .Values.client.name }}
     spec:
       containers:
-        - name: {{.Values.client.name }}
-          image: {{.Values.global.dockerUsername}}/{{.Values.client.name}}:{{.Values.global.tag }}
-          imagePullPolicy: {{.Values.global.imagePullPolicy}}
+        - name: {{ .Values.client.name }}
+          image: {{ .Values.global.dockerUsername }}/{{ .Values.client.name }}:{{ .Values.global.tag }}
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           ports:
-            - containerPort: {{.Values.client.port }}
+            - containerPort: {{ .Values.client.port }}
           
           livenessProbe:
             httpGet: 
-              path: /health
-              port: {{.Values.client.port }}
+              path: /
+              port: {{ .Values.client.port }}
             initialDelaySeconds: 30
             periodSeconds: 5
           
           readinessProbe:
             httpGet:
-              path: /health
-              port: {{.Values.client.port }}
+              path: /
+              port: {{ .Values.client.port }}
             initialDelaySeconds: 5
             periodSeconds: 5
             
           env:
-            - name: VITE_API_URL
-              value: api          
+            - name: API_URL
+              value:           
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d

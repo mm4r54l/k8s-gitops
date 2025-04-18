@@ -2,7 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: client-nginx-config
-  namespace: my-app
+  labels:
+    app: {{ .Values.client.name }}
 
 data:
   default.conf: |
@@ -18,7 +19,7 @@ data:
       }
 
       location /api/ {
-        proxy_pass http://api-gateway:3000/api/;
+        proxy_pass http://{{ .Values.apiGateway.name }}-svc:{{ .Values.apiGateway.port }}/api/;
 
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;

@@ -3,12 +3,17 @@ global:
   tag: latest
   imagePullPolicy: Always
 
+ingress:
+  enabled: true
+  host: myapp.127.0.0.1.nip.io
+  className: nginx
+
 auth:
   name: auth
   replicas: 1
-  port: 3000
+  port: 3001
 
-api-gateway:
+apiGateway:
   name: api-gateway
   replicas: 1
   port: 3000
@@ -17,3 +22,8 @@ client:
   name: client
   replicas: 1
   port: 80
+
+test:
+  enabled: true
+  targetService: client
+  targetPort: 80

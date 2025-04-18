@@ -1,34 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{.Values.auth.name}}  
+  name: {{ .Values.auth.name }}  
 spec:
   replicas: {{ .Values.auth.replicas  }}
   selector:
     matchLabels:
-      app: {{.Values.auth.name}}
+      app: {{ .Values.auth.name }}
   template:
     metadata:
       labels:
-        app: {{.Values.auth.name}}
+        app: {{ .Values.auth.name }}
     spec:
       containers:
-        - name: {{ .Values.auth.name  }}
-          image: {{ .Values.global.dockerUsername}}/{{ .Values.auth.name }}:{{ .Values.global.tag  }}
+        - name: {{ .Values.auth.name }}
+          image: {{ .Values.global.dockerUsername }}/{{ .Values.auth.name }}:{{ .Values.global.tag  }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy  }}
           ports:
             - containerPort: {{ .Values.auth.port }}
           
           livenessProbe:
             httpGet: 
-              path: /health
+              path: /api
               port: {{ .Values.auth.port }}
             initialDelaySeconds: 30
             periodSeconds: 5
           
           readinessProbe:
             httpGet:
-              path: /health
+              path: /api
               port: {{ .Values.auth.port }}
             initialDelaySeconds: 5
             periodSeconds: 5

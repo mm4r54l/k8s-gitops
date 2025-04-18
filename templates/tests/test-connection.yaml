@@ -1,15 +1,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "my-app.fullname" . }}-test-connection"
-  labels:
-    {{- include "my-app.labels" . | nindent 4 }}
+  name: '{{ .Release.Name }}-test-connection'
   annotations:
-    "helm.sh/hook": test
+    'helm.sh/hook': test
 spec:
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['{{ include "my-app.fullname" . }}:{{ .Values.service.port }}']
+    - name: curl
+      image: curlimages/curl:latest
+      command: ['curl']
+      args:
+        ['{{ .Values.test.targetService }}-svc:{{ .Values.test.targetPort }}']
   restartPolicy: Never
