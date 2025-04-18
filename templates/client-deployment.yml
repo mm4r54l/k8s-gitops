@@ -37,7 +37,7 @@ spec:
             
           env:
             - name: API_URL
-              value:           
+              value: {{ .Values.client.env.API_URL }}
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d

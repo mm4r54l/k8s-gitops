@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.apiGateway.name }}  
+  labels:
+    app: {{ .Values.apiGateway.name }} 
 spec:
   replicas: {{ .Values.apiGateway.replicas  }}
   selector:
@@ -18,6 +20,11 @@ spec:
           imagePullPolicy: {{ .Values.global.imagePullPolicy  }}
           ports:
             - containerPort: {{ .Values.apiGateway.port  }}
+          env:
+            - name: PORT
+              value: '{{ .Values.apiGateway.port  }}'
+            - name: AUTH_URL
+              value: http://{{ .Values.auth.name }}-svc:{{ .Values.auth.port  }}
           
           livenessProbe:
             httpGet: 

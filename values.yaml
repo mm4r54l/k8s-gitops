@@ -22,6 +22,8 @@ client:
   name: client
   replicas: 1
   port: 80
+  env:
+    API_URL:
 
 test:
   enabled: true
